@@ -21,6 +21,8 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'profiles', views.ProfileViewSet)
 router.register(r'events', views.EventViewSet)
+router.register(r'postalcode', views.PostalCodeViewSet)
+router.register(r'eventsassistance', views.EventAssistanceViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
