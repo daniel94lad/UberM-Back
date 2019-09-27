@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import viewsets
-from .serializers import ProfileSerializer, EventSerializer
+from ubermeserosback.serializers import ProfileSerializer, EventSerializer
+from users.models import Profile
+from events.models import Event
 
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
