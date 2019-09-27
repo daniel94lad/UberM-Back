@@ -6,7 +6,7 @@ from events.models import Event
 class ProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Profile
-        fields = ['phoneNumer', 'avatar', 'active', 'streetAddress', 'created', 'modified']
+        fields = ['phoneNumber', 'avatar', 'active', 'streetAddress', 'created', 'modified']
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
