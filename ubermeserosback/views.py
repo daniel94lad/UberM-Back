@@ -9,5 +9,5 @@ class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
 
 class EventViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
+    queryset = Event.objects.all()
     serializer_class = EventSerializer
