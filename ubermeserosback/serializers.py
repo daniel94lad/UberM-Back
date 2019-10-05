@@ -17,7 +17,6 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['user','phoneNumber', 'avatar', 'active', 'streetAddress']
 
     def create(self, validated_data):
-        #user = User.objects.get(pk=validated_data.pop('user'))
         userData = validated_data.get('user')
         userData['password'] = make_password(userData['password'])
         userInstance = User.objects.create(**userData)
