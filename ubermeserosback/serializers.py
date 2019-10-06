@@ -30,11 +30,9 @@ class PostalCodeSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['postalCode', 'city', 'state', 'country']
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
-    user = UserSerializer()
-    postalCode = PostalCodeSerializer()
     class Meta:
         model = Event
-        fields = ['user', 'startDate', 'endDate', 'streetAddress', 'postalCode', 'waiterNumber', 'score']
+        fields = ['username', 'startDate', 'endDate', 'streetAddress', 'postalCode', 'waiterNumber', 'score']
 
 class EventAssistanceSerializer(serializers.HyperlinkedModelSerializer):
     event = EventSerializer()

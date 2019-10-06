@@ -4,11 +4,11 @@ from postalcode.models import PostalCode
 
 # Create your models here.
 class Event(models.Model):
-    #user = models.ForeignKey(User, on_delete=models.CASCADE)
+    username = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', related_name='username_id')
     startDate = models.DateTimeField()
     endDate = models.DateTimeField()
     streetAddress = models.CharField(max_length=40)
-    #postalCode = models.ForeignKey(PostalCode, on_delete=models.CASCADE)
+    postalCode = models.ForeignKey(PostalCode, on_delete=models.CASCADE, to_field='postalCode')
     waiterNumber = models.IntegerField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
