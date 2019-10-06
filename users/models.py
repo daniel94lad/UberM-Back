@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from postalcode.models import PostalCode
 
 # Create your models here.
 
@@ -9,8 +10,7 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to='user/pictures', blank=True, null=True)
     active = models.NullBooleanField()
     streetAddress = models.CharField(max_length=40)
-    # I need to perform this relationship later
-    #postalCode = models.ForeignKey(Ubicacion, related_name='codigo_postal')
+    postalCode = models.ForeignKey(PostalCode, on_delete=models.CASCADE, to_field='postalCode', related_name='postalCode_id')
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 

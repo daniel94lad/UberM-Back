@@ -14,7 +14,7 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Profile
-        fields = ['user','phoneNumber', 'avatar', 'active', 'streetAddress']
+        fields = ['user','phoneNumber', 'avatar', 'active', 'streetAddress', 'postalCode']
 
     def create(self, validated_data):
         userData = validated_data.get('user')
