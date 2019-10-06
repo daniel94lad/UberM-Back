@@ -35,8 +35,6 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['username', 'startDate', 'endDate', 'streetAddress', 'postalCode', 'waiterNumber', 'score']
 
 class EventAssistanceSerializer(serializers.HyperlinkedModelSerializer):
-    event = EventSerializer()
-    user = UserSerializer()
     class Meta:
         model = EventAssistance
-        fields = ['event', 'user', 'accepted', 'score']
+        fields = ['event', 'username', 'accepted', 'score']

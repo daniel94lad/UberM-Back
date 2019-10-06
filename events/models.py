@@ -16,7 +16,7 @@ class Event(models.Model):
 
 class EventAssistance(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    username = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username')
     accepted = models.BooleanField(default=False)
     score = models.IntegerField(null=True, blank=True)
 
