@@ -27,7 +27,7 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
 class PostalCodeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PostalCode
-        fields = '__all__'
+        fields = ['postalCode', 'city', 'state', 'country']
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
     user = UserSerializer()
