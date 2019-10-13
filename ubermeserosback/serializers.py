@@ -5,12 +5,12 @@ from users.models import Profile
 from events.models import Event, EventAssistance
 from postalcode.models import PostalCode
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password']
 
-class ProfileSerializer(serializers.HyperlinkedModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Profile
@@ -24,17 +24,17 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
         instance = Profile.objects.create(**validated_data)
         return instance
 
-class PostalCodeSerializer(serializers.HyperlinkedModelSerializer):
+class PostalCodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostalCode
         fields = ['postalCode', 'city', 'state', 'country']
 
-class EventSerializer(serializers.HyperlinkedModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ['username', 'startDate', 'endDate', 'streetAddress', 'postalCode', 'waiterNumber', 'score']
 
-class EventAssistanceSerializer(serializers.HyperlinkedModelSerializer):
+class EventAssistanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventAssistance
         fields = ['event', 'username', 'accepted', 'score']

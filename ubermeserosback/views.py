@@ -1,6 +1,10 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password, check_password
+from django.http import Http404
 from rest_framework import viewsets
-from ubermeserosback.serializers import ProfileSerializer, EventSerializer, PostalCodeSerializer, EventAssistanceSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from ubermeserosback.serializers import UserSerializer, ProfileSerializer, EventSerializer, PostalCodeSerializer, EventAssistanceSerializer
 from users.models import Profile
 from events.models import Event, EventAssistance
 from postalcode.models import PostalCode
@@ -20,3 +24,22 @@ class PostalCodeViewSet(viewsets.ModelViewSet):
 class EventAssistanceViewSet(viewsets.ModelViewSet):
     queryset = EventAssistance.objects.all()
     serializer_class = EventAssistanceSerializer
+
+class UserLoginAuthentication(APIView):
+
+    def get_object(self, username, password):
+        try:
+            user = User.objects.get(username=username)
+            if check_password(password, user.password):
+                return user
+            else:
+                raise User.DoesNotExist
+        except User.DoesNotExist:
+            raise Http404
+    
+    def get(self, request, format=None):
+        requestUsername=request.GET.get('username')
+        requestPassword=request.GET.get('password')
+        user = self.get_object(requestUsername, requestPassword)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
