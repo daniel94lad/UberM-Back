@@ -1,3 +1,8 @@
 from django.shortcuts import render
+from rest_framework.viewsets import ModelViewSet
+from ubermeserosback.serializers import PostalCodeSerializer
+from postalcode.models import PostalCode
 
-# Create your views here.
+class PostalCodeViewSet(ModelViewSet):
+    queryset = PostalCode.objects.all()
+    serializer_class = PostalCodeSerializer

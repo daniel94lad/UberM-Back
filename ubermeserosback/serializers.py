@@ -27,6 +27,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         userData = validated_data.get('user')
         userData['password'] = make_password(userData['password'])
         userInstance = User.objects.create(**userData)
+        Token.objects.create(user=userInstance)
         validated_data['user'] = userInstance
         instance = Profile.objects.create(**validated_data)
         return instance

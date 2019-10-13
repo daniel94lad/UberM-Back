@@ -17,16 +17,19 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from . import views
+from users.views import UserLoginAuthenticationView, ProfileViewSet
+from postalcode.views import PostalCodeViewSet
+from events.views import EventViewSet, EventAssistanceViewSet
 
 router = routers.DefaultRouter()
-router.register(r'profiles', views.ProfileViewSet)
-router.register(r'events', views.EventViewSet)
-router.register(r'postalcode', views.PostalCodeViewSet)
-router.register(r'eventsassistance', views.EventAssistanceViewSet)
+router.register(r'profiles', ProfileViewSet)
+router.register(r'events', EventViewSet)
+router.register(r'postalcode', PostalCodeViewSet)
+router.register(r'eventsassistance', EventAssistanceViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
-    path('login/', views.UserLoginAuthentication.as_view())
+    path('login/', UserLoginAuthenticationView.as_view())
 ]
