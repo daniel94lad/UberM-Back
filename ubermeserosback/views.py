@@ -4,7 +4,8 @@ from django.http import Http404
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from ubermeserosback.serializers import UserSerializer, ProfileSerializer, EventSerializer, PostalCodeSerializer, EventAssistanceSerializer
+from rest_framework.authtoken.models import Token
+from ubermeserosback.serializers import TokenSerializer, UserSerializer, ProfileSerializer, EventSerializer, PostalCodeSerializer, EventAssistanceSerializer
 from users.models import Profile
 from events.models import Event, EventAssistance
 from postalcode.models import PostalCode
@@ -27,7 +28,7 @@ class EventAssistanceViewSet(viewsets.ModelViewSet):
 
 class UserLoginAuthentication(APIView):
 
-    def get_object(self, username, password):
+    def get_user_object(self, username, password):
         try:
             user = User.objects.get(username=username)
             if check_password(password, user.password):
@@ -36,10 +37,18 @@ class UserLoginAuthentication(APIView):
                 raise User.DoesNotExist
         except User.DoesNotExist:
             raise Http404
-    
+
+    def get_token(self, username, password):
+        user = self.get_user_object(username, password)
+        try:
+            token = Token.objects.get(user=user)
+            serializer = TokenSerializer(token)
+            return serializer.data
+        except Token.DoesNotExist:
+            raise Http404
+
     def get(self, request, format=None):
         requestUsername=request.GET.get('username')
         requestPassword=request.GET.get('password')
-        user = self.get_object(requestUsername, requestPassword)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+        token = self.get_token(requestUsername, requestPassword)
+        return Response(token)

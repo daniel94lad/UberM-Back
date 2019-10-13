@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 from users.models import Profile
 from events.models import Event, EventAssistance
 from postalcode.models import PostalCode
@@ -9,6 +10,12 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password']
+
+class TokenSerializer(serializers.ModelSerializer):
+    #user = UserSerializer()
+    class Meta:
+        model = Token
+        fields = ['key']
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
