@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from . import views
 from users.views import UserLoginAuthenticationView, ProfileViewSet
 from postalcode.views import PostalCodeViewSet
 from events.views import EventViewSet, EventAssistanceViewSet
