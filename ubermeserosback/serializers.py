@@ -1,23 +1,24 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 from rest_framework.authtoken.models import Token
 from users.models import Profile
 from events.models import Event, EventAssistance
 from postalcode.models import PostalCode
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password']
+        extra_kwargs = {'password': {'write_only': True}}
 
-class TokenSerializer(serializers.ModelSerializer):
+class TokenSerializer(ModelSerializer):
     #user = UserSerializer()
     class Meta:
         model = Token
         fields = ['key']
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileSerializer(ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Profile
@@ -32,17 +33,17 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance = Profile.objects.create(**validated_data)
         return instance
 
-class PostalCodeSerializer(serializers.ModelSerializer):
+class PostalCodeSerializer(ModelSerializer):
     class Meta:
         model = PostalCode
         fields = ['postalCode', 'city', 'state', 'country']
 
-class EventSerializer(serializers.ModelSerializer):
+class EventSerializer(ModelSerializer):
     class Meta:
         model = Event
         fields = ['username', 'startDate', 'endDate', 'streetAddress', 'postalCode', 'waiterNumber', 'score']
 
-class EventAssistanceSerializer(serializers.ModelSerializer):
+class EventAssistanceSerializer(ModelSerializer):
     class Meta:
         model = EventAssistance
         fields = ['event', 'username', 'accepted', 'score']
