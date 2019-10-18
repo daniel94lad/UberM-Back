@@ -40,3 +40,7 @@ class UserLoginAuthenticationView(APIView):
 class ProfileViewSet(ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+class MeserosViewSet(ModelViewSet):
+    queryset = Profile.objects.filter(active=True)
+    serializer_class = ProfileSerializer

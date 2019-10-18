@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from users.views import UserLoginAuthenticationView, ProfileViewSet
+from users.views import UserLoginAuthenticationView, ProfileViewSet, MeserosViewSet
 from postalcode.views import PostalCodeViewSet
 from events.views import EventViewSet, EventAssistanceViewSet
 
@@ -25,6 +25,7 @@ router.register(r'profiles', ProfileViewSet)
 router.register(r'events', EventViewSet)
 router.register(r'postalcode', PostalCodeViewSet)
 router.register(r'eventsassistance', EventAssistanceViewSet)
+router.register(r'meseros', MeserosViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
