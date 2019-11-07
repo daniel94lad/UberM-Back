@@ -1,5 +1,4 @@
 """ubermeserosback URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
 Examples:
@@ -18,7 +17,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework import routers
-from users.views import UserLoginAuthenticationView, ProfileViewSet, MeserosViewSet
+from users.views import UserLoginAuthenticationView, ProfileViewSet
 from postalcode.views import PostalCodeViewSet
 from events.views import EventViewSet, EventAssistanceViewSet
 
@@ -27,11 +26,11 @@ router.register(r'profiles', ProfileViewSet)
 router.register(r'events', EventViewSet)
 router.register(r'postalcode', PostalCodeViewSet)
 router.register(r'eventsassistance', EventAssistanceViewSet)
-router.register(r'meseros', MeserosViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
-    path('login/', UserLoginAuthenticationView.as_view())
-] + static(settings.MEDIA_URL, document_root=settings.BASE_DIR)
+    path('login/', UserLoginAuthenticationView.as_view()),
+    path('profiles/<str:pk>/<int:cp>/', ProfileViewSet.as_view({'get':'retrieve'})),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

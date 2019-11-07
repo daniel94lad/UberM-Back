@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import check_password
 from django.http import Http404
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
@@ -39,10 +40,21 @@ class UserLoginAuthenticationView(APIView):
         return Response(token)
 
 class ProfileViewSet(ModelViewSet):
+    # permission_classes = [IsAuthenticated]
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
-class MeserosViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated]
-    queryset = Profile.objects.filter(active=True)
-    serializer_class = ProfileSerializer
+    def retrieve(self, retrieve, pk=None, cp=None):
+        if pk == "meseros":
+            if cp != None:
+                queryset = Profile.objects.filter(active=False)
+            else:
+                queryset = Profile.objects.filter(active=True)
+        else:
+            try:
+                user = User.objects.get(username=pk)
+                queryset = Profile.objects.filter(user=user)
+            except:
+                raise Http404
+        serializer = ProfileSerializer(queryset, many=True)
+        return Response(serializer.data)
